@@ -17,4 +17,6 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://huggingface.co/spaces/TalentedSD/math_llm main
+        run: 
+          git remote set-url origin https://huggingface.co/spaces/TalentedSD/math_llm
+          git push origin main
