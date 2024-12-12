@@ -1,39 +1,20 @@
-name: Sync to Hugging Face Hub
-
+name: Sync to Hugging Face hub
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
-  workflow_dispatch: # Allow manual runs
+  # to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout Repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch the full history
-          lfs: true # Enable Git LFS if necessary
-
-      # Step 2: Setup Git LFS (if needed)
-      - name: Setup Git LFS
-        run: |
-          git lfs install
-
-      # Step 3: Pull latest changes from remote and merge
-      - name: Pull latest changes and merge
-        run: |
-          git fetch origin
-          git merge origin/main --strategy=recursive --strategy-option=theirs
-
-      # Step 4: Push to Hugging Face Hub
-      - name: Push to Hugging Face Hub
+          fetch-depth: 0
+          lfs: true
+      - name: Push to hub
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }} # Use token stored in secrets
-        run: |
-          git remote set-url origin https://TalentedSD:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/TalentedSD/math_llm
-          git push origin main
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git push https://TalentedSD:$HF_TOKEN@huggingface.co/spaces/TalentedSD/math_llm main
