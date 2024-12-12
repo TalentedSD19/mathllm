@@ -24,8 +24,8 @@ jobs:
         run: |
           git lfs install
 
-      # Step 3: Fetch latest changes from remote and merge
-      - name: Fetch and merge remote changes
+      # Step 3: Pull latest changes from remote and merge
+      - name: Pull latest changes and merge
         run: |
           git fetch origin
           git merge origin/main --strategy=recursive --strategy-option=theirs
