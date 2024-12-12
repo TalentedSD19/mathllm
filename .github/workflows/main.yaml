@@ -24,7 +24,13 @@ jobs:
         run: |
           git lfs install
 
-      # Step 3: Push to Hugging Face Hub
+      # Step 3: Fetch latest changes from remote and merge
+      - name: Fetch and merge remote changes
+        run: |
+          git fetch origin
+          git merge origin/main --strategy=recursive --strategy-option=theirs
+
+      # Step 4: Push to Hugging Face Hub
       - name: Push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }} # Use token stored in secrets
